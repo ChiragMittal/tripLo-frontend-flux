@@ -1,0 +1,194 @@
+<html lang="en" >
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>  
+
+   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!--script src="js/jquery-3.1.0.min.js"></script>
+   <script src="js/bootstrap.min.js"></script-->
+   <link rel="stylesheet" href="public/css/login.css" >
+   <!--script type="text/javascript" src="js/login.js"></script-->
+
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+   <link rel="stylesheet" href="public/css/example.wink.css">
+
+<body>
+      <div class="carousel slide carousel-fade" data-ride="carousel">
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox" style="margin-top:0px;">
+            <div class="item active" >
+              <div style="margin-left:100px;padding-top:500px;">
+                 
+              </div>              
+            </div>
+
+            <div class="item">
+              <div style="margin-left:100px;padding-top:500px;">
+                 
+              </div>
+            </div>
+
+            <div class="item">
+              <div style="margin-left:100px;padding-top:500px;">
+                 
+              </div>
+            </div>
+        </div>
+      </div>
+
+  <div class="w3-container"   >
+      <div class="w3-card-12 left">
+            
+        <div class="card-block">
+        <div class="log" >  
+   <div  class="modal show" tabindex="-1" role="dialog" aria-hidden="true" >
+     <div class="modal-dialog" style="float:right; margin-right:50px;margin-top:200px;">
+     <div>
+
+      <div class="modal-content" style="background-color: rgba(0, 0, 0, .7);">
+          <div class="modal-header">    
+
+                    <h2 class="text-center" style="color:white;">Sign In To tripLo</h2> 
+
+                    <div>
+                           <button type="button" class="btn btn-primary btn-lg center-block" style="margin-top:20px; ">Sign In With Facebook</button>
+                    </div>
+                    
+                    <div>
+                            <button type="google" class="btn btn-danger btn-lg center-block" style="margin-top:20px;  margin-bottom:30px;">Sign In With Google  </button>
+                    </div>
+           </div>               
+
+       <form id="loginForm">
+              <div class="modal-body">
+      
+                  <form class="form col-md-12 center-block">
+                    <div class="form-group">
+                      <input type="text" class="form-control input-lg" placeholder="Username" id="username">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control input-lg" id="password_1" placeholder="Password">
+                    </div>
+                    
+                  </form> 
+              </div>  
+ 
+             <div class="modal-footer"> 
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary btn-lg " data-toggle="modal" style="margin-right:230px;color:white;">Sign In</button>
+                    </div>
+                       <br> 
+                         <!--a href="#" ><p class="forgot" style="font-size:20px;color:white;">Forgotten your password?</p></a>
+                         <a href="signup.html" ><p class="signup" style="font-size:20px;color:white;">Sign Up Now</p></a-->    
+                  </div>
+               </div>  
+       </form> 
+        
+
+
+                  <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>Some text in the modal.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+
+
+        
+  </div>
+</div>
+</div>
+   </div> 
+  </div>
+  </div>
+</div>
+</div>
+
+      <script type="text/javascript">
+           $('.carousel').carousel();
+      </script>
+
+      <script src="public/js/jquery.js"></script>
+
+      <script src="public/js/jquery.cookie.js"></script>
+
+      <script src="public/js/hideShowPassword.min.js"></script>
+
+<script>
+$('#password_1').hidePassword(true);
+
+$('#show-password').change(function(){
+  $('#password_1').hideShowPassword($(this).prop('checked'));
+});
+
+</script>
+
+
+<script >
+    $(document).ready(function(){
+      $('#loginForm').submit(function(e){
+          var data = {
+            username : $('#username').val(),
+            password : $('#password_1').val()
+          };
+          $.ajax({
+            type : 'POST',
+            url : 'api/auth',
+            data : 'data',
+            dataType : 'json',
+            encode : true,
+            timeout: 3000,
+            success: function(data){
+                      
+                        if(data.success == false)
+                        {
+                            $("#myModal").children("p").html(data.message);
+                             $("#myModal").show();
+                        }
+                        else
+                        {
+                          $.cookie('token',data.token);
+                        }
+                          $.cookie('username',data.user.username);
+                          $.cookie('picture',data.user.pic);
+                          $.cookie('fname',data.user.fnames);
+                         // $.cookie('token',data.token);
+                    },
+            error: function(x, t, m){
+                    $("#myModal>div>div>div>p").html(t);
+                    $("#myModal").modal('show');
+                  }
+          });
+          e.preventDefault();
+      });
+    });
+</script>
+
+</body>
+
+
+
+
+  </body>
+</html>                   
