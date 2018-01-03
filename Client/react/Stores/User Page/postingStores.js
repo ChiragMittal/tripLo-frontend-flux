@@ -1,29 +1,29 @@
-var AppDispatcher = require('../User_Dispatcher/user_dispatcher.js');
+var AppDispatcher = require('../../Dispatcher/appDispatcher');
 var EventEmitter = require('events').EventEmitter;
-var FluxCartConstants = require('../User_Constants/user_constants.js');
-var UserAPI = require('../User_Constants/user_API');
+var FluxCartConstants = require('../../Constants/user_constants');
+var UserAPI = require('../../API/user_API');
 var _ = require('underscore');
 
 // Define initial data points
 var _posts = [];
 
 
-  function loadPost(username,target,token,start){
-    UserAPI.retrievePost(username,target,token,start);
-  }
+function loadPost(username, target, token, start) {
+  UserAPI.retrievePost(username, target, token, start);
+}
 
-  function recieveInfo(data){
-     _posts=data;
-  }
+function recieveInfo(data) {
+  _posts = data;
+}
 
 
 // Extend Cart Store with EventEmitter to add eventing capabilities
 var PostsStore = _.extend({}, EventEmitter.prototype, {
-  getpost:function(){
-     loadPost("chirag","chirag","chi",10);
-  return _posts;
+  getpost: function () {
+    loadPost("chirag", "chirag", "chi", 10);
+    return _posts;
   },
-  
+
   // Emit Change event
   emitChange: function () {
     this.emit('change');
@@ -45,17 +45,17 @@ AppDispatcher.register(function (payload) {
   switch (action.actionType) {
     // Respond to CART_ADD action
     case FluxCartConstants.RETRIEVE_POST:
-      loadInfo(action.username,action.target,action.token,action.start);
+      loadInfo(action.username, action.target, action.token, action.start);
       break;
 
-      case FluxCartConstants.LOAD_POST:
+    case FluxCartConstants.LOAD_POST:
       recieveInfo(action.data);
       break;
 
     //server dispatcher for check loggedIn and add/remove to/from favorite
     //functions to have = getUserLoggedIn(), addToFavorite(), removeFromFavorite()
 
-    
+
     default:
       return true;
   }

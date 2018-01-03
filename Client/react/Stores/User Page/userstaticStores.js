@@ -1,7 +1,7 @@
-var AppDispatcher = require('../Dispatcher/AppDispatcher');
+var AppDispatcher = require('../../Dispatcher/appDispatcher');
 var EventEmitter = require('events').EventEmitter;
-var FluxCartConstants = require('../Constants/user_constants');
-var UserAPI = require('../API/user_API');
+var FluxCartConstants = require('../../Constants/user_constants');
+var UserAPI = require('../../API/user_API');
 var _ = require('underscore');
 
 // Define initial data points
@@ -23,7 +23,7 @@ _user = {
 
 // Add product to cart
 function picAdd(img) {
-  _user.push({img:img});
+  _user.push({ img: img });
 }
 
 // Set cart visibility
@@ -33,41 +33,41 @@ function picAdd(img) {
 
 // Remove item from cart
 function removeItem(img) {
-   _user.img = "";
+  _user.img = "";
 }
 
-  function editInfo(fname,lname,dob,info){
-    _user.fname=fname;
-    _user.lname=lname;
-    _user.dob=dob;
-    _user.info=info;
-  }
+function editInfo(fname, lname, dob, info) {
+  _user.fname = fname;
+  _user.lname = lname;
+  _user.dob = dob;
+  _user.info = info;
+}
 
-  function loadInfo(username,target,token){
-    UserAPI.retrieveInfo(username,target,token);
-  }
+function loadInfo(username, target, token) {
+  UserAPI.retrieveInfo(username, target, token);
+}
 
-  function recieveInfo(data){
-     _user={
-         username: data.username,
-         picpath: data.picpath,
-         fname : data.fname,
-         lname : data.lname,
-         dob : data.dob,
-         info : data.info,
-         follow_count : data.follow_count,
-         following_count : data.following_count,
-         favourites_count : data.favourites_count,
-         destination_categories : data.destination_categories
-     }
+function recieveInfo(data) {
+  _user = {
+    username: data.username,
+    picpath: data.picpath,
+    fname: data.fname,
+    lname: data.lname,
+    dob: data.dob,
+    info: data.info,
+    follow_count: data.follow_count,
+    following_count: data.following_count,
+    favourites_count: data.favourites_count,
+    destination_categories: data.destination_categories
   }
+}
 
 
 // Extend Cart Store with EventEmitter to add eventing capabilities
 var PicInfoStore = _.extend({}, EventEmitter.prototype, {
   // Return cart items
   getUserInfo: function () {
-    loadInfo("chirag","chirag","schirag");
+    loadInfo("chirag", "chirag", "schirag");
     return _user;
   },
   // getUsername: function () {
@@ -111,17 +111,17 @@ AppDispatcher.register(function (payload) {
   switch (action.actionType) {
 
     case FluxCartConstants.RETRIEVE_INFO:
-      loadInfo(action.username,action.target,action.token);
+      loadInfo(action.username, action.target, action.token);
       break;
 
-      case FluxCartConstants.RECIEVE_INFO:
+    case FluxCartConstants.RECIEVE_INFO:
       recieveInfo(action.data);
       break;
 
     //server dispatcher for check loggedIn and add/remove to/from favorite
     //functions to have = getUserLoggedIn(), addToFavorite(), removeFromFavorite()
 
-    
+
     default:
       return true;
   }

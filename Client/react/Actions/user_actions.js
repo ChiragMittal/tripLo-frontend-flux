@@ -1,4 +1,4 @@
-var AppDispatcher = require('../Dispatcher/AppDispatcher');
+var AppDispatcher = require('../Dispatcher/appDispatcher');
 var FluxCartConstants = require('../Constants/user_constants');
 
 // Define action methods
@@ -19,46 +19,46 @@ var FluxCartActions = {
   },
 
   // Add item to cart
-  editInfo: function (fname,lname,dob,info) {
+  editInfo: function (fname, lname, dob, info) {
     AppDispatcher.handleAction({
       actionType: FluxCartConstants.EDIT_INFO,
       fname: fname,
-      lname : lname,
-      dob : dob,
-      info : info
+      lname: lname,
+      dob: dob,
+      info: info
     })
   },
-  
-   retrieveInfo: function (username,target,token) {
+
+  retrieveInfo: function (username, target, token) {
     AppDispatcher.handleAction({
       actionType: FluxCartConstants.RETRIEVE_INFO,
       username: username,
       token: token,
-      target:target
+      target: target
     })
   },
 
   recieveInfo: function (data) {
     AppDispatcher.handleAction({
       actionType: FluxCartConstants.RECIEVE_INFO,
-      data : data
+      data: data
     })
   },
 
-  retrievePost: function (username,target,token,start) {
+  retrievePost: function (username, target, token, start) {
     AppDispatcher.handleAction({
       actionType: FluxCartConstants.RETRIEVE_POST,
-      username : username ,
-      target : target,
-      token : token,
-      start : start
+      username: username,
+      target: target,
+      token: token,
+      start: start
     })
   },
 
   loadPost: function (data) {
     AppDispatcher.handleAction({
       actionType: FluxCartConstants.LOAD_POST,
-      data : data
+      data: data
     })
   }
 

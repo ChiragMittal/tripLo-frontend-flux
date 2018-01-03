@@ -1,15 +1,15 @@
 var React = require('react');
-var FluxCartActions = require('../../User_Actions/user_actions.js');
+var FluxCartActions = require('../../../Actions/user_actions');
 var FluxSinglePost = require('./singlePost.react.js');
 
 
-var PostsStore = require('../../User_Stores/postingStores');
+var PostsStore = require('../../../Stores/User Page/postingStores');
 
 
 // Method to retrieve state from Stores
 function getCartState() {
   return {
-    posts : PostsStore.getpost()
+    posts: PostsStore.getpost()
   };
 }
 
@@ -32,23 +32,23 @@ var FluxMultiPost = React.createClass({
   // Remove change listeners from stores
   componentWillUnmount: function () {
     PostsStore.removeChangeListener(this._onChange);
-   // CartStore.removeChangeListener(this._onChange);
+    // CartStore.removeChangeListener(this._onChange);
     // MapStore.removeChangeListener(this._onChange);
   },
 
 
   // Render product View
   render: function () {
-    var multipost = this.state.posts ;
+    var multipost = this.state.posts;
 
     //var imagePic = (this.props.user.image == null? 'default.png': this.props.user.image)
     return (
       <div className="flux-multi-post">
-           <ul>
-               {multipost.map(function(value,index){
-                   return (<FluxSinglePost post={value}/>)
-               })}
-           </ul>
+        <ul>
+          {multipost.map(function (value, index) {
+            return (<FluxSinglePost post={value} />)
+          })}
+        </ul>
       </div>
     );
   },
